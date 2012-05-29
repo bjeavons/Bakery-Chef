@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+#^syntax detection
+
+site 'http://community.opscode.com/api/v1'
+
+# cookbook 'chef-client'
+
+cookbook 'apache2',
+  :git => 'https://github.com/cookbooks/apache2'
+cookbook 'apt',
+  :git => 'https://github.com/opscode-cookbooks/apt'
+cookbook 'build-essential',
+  :git => 'https://github.com/opscode-cookbooks/build-essential'
+cookbook 'drush',
+  :git => 'https://github.com/msonnabaum/chef-drush'
+cookbook 'git',
+  :git => 'https://github.com/opscode-cookbooks/git'
+# Use patcon's fork until https://github.com/opscode-cookbooks/mysql/pull/8 is merged.
+cookbook 'mysql',
+  :git => 'https://github.com/myplanetdigital/chef-mysql',
+  :ref => 'COOK-1236'
+cookbook 'openssl',
+  :git => 'https://github.com/opscode-cookbooks/openssl'
+cookbook 'php',
+  :git => 'https://github.com/opscode-cookbooks/php'
+cookbook 'percona',
+  :git => 'https://github.com/myplanetdigital/chef-percona'

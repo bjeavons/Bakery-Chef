@@ -1,0 +1,12 @@
+{
+  "name": "db-server",
+  "default_attributes": {
+  },
+  "json_class": "Chef::Role",
+  "run_list": [
+    "recipe[percona]",
+    "recipe[percona::server]"
+  ],
+  "description": "",
+  "chef_type": "role"
+}
