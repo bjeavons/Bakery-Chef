@@ -16,12 +16,10 @@ Vagrant::Config.run do |config|
     chef.add_role("bakery")
     chef.json.merge!({
     :www_root => '/var/www',
-    :hosts => {
-      :localhost_aliases => {
-        "bakerymasterd6" => "masterd6.vbox",
-        "bakerysubd6" => "d6.masterd6.vbox",
-        "bakerysubd7" => "d7.masterd6.vbox"
-      }
+    :sites => {
+      "masterd6" => {:alias => "masterd6.vbox", :make => "bakery-d6.make"},
+      "subd6" => {:alias => "d6.masterd6.vbox", :make => "bakery-d6.make"},
+      "subd7" => {:alias => "d7.masterd6.vbox", :make => "bakery-d7.make"}
     }
   })
   end

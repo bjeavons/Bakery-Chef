@@ -3,14 +3,13 @@
 require_recipe "hosts"
 require_recipe "apache2"
 
-if node[:hosts].has_key(:localhost_aliases)
-  node[:hosts][:localhost_aliases].each do |name, site|
-    # Configure the development site
-    web_app site do
-      template "sites.conf.erb"
-      server_name site
-      server_aliases [site]
-      docroot "#{node[:www_root]}/#{name}/htdocs"
-    end
+node[:sites].each do |name, attrs|
+  site = attrs[:alias]
+  # Configure the site vhost
+  web_app site do
+    template "sites.conf.erb"
+    server_name site
+    server_aliases [site]
+    docroot "#{node[:www_root]}/#{name}/htdocs"
   end
 end
