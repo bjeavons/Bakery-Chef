@@ -4,8 +4,13 @@ Bakery-enabled cluster of Drupal sites for Bakery testing using Vagrant and Chef
 
 1. [Download Virtual Box](https://www.virtualbox.org/wiki/Downloads)
 1. [Download & install vagrant](http://downloads.vagrantup.com/tags/v1.0.3)
-1. clone this repos
-1. Run `vagrant up` within the repos directory
+1. `git clone git://github.com/bjeavons/Bakery-Chef.git`
+1. `cd Bakery-Chef`
+1. `vagrant up`
 
-The repos contains a Vagrantfile and Cheffile for creating a vm. The vm apache server will be accessible at 172.22.22.22.
+Running `vagrant up` will take awhile because it downloads the VM image.
+
+When it is done you can connect to the vm server using `vagrant ssh`.
+
+The vm's apache server will be accessible at 172.22.22.22.
 
