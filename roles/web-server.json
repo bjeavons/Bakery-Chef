@@ -6,10 +6,15 @@
   "run_list": [
     "recipe[git::default]",
     "recipe[php]",
+    "recipe[php::module_curl]",
+    "recipe[php::module_gd]",
+    "recipe[php::module_mysql]",
+    "recipe[openssl::default]",
     "recipe[apache2]",
     "recipe[apache2::mod_expires]",
     "recipe[apache2::mod_php5]",
-    "recipe[apache2::mod_rewrite]"
+    "recipe[apache2::mod_rewrite]",
+    "recipe[apache2::mod_ssl]"
   ],
   "description": "",
   "chef_type": "role",
@@ -24,7 +29,8 @@
         "maxrequestsperchild": 0
       },
       "listen_ports": [
-        "80"
+        "80",
+        "443"
       ]
     }
   }

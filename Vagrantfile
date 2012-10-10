@@ -16,10 +16,31 @@ Vagrant::Config.run do |config|
     chef.add_role("bakery")
     chef.json.merge!({
     :www_root => '/var/www',
+    :mysql => {
+      "server_root_password" => "1234",
+      "drupal_user" => "bakery",
+      "drupal_password" => "bakery"
+    },
+    :drupal => {
+      "admin_password" => "1234"
+    },
     :sites => {
-      "masterd6" => {:alias => "masterd6.vbox", :make => "bakery-d6.make"},
-      "subd6" => {:alias => "d6.masterd6.vbox", :make => "bakery-d6.make"},
-      "subd7" => {:alias => "d7.masterd6.vbox", :make => "bakery-d7.make"}
+      "masterd6" => {
+        :alias => "masterd6.vbox",
+        :core => "6",
+        :master => "masterd6.vbox",
+        :subs => ["d6.masterd6.vbox", "d7.masterd6.vbox"]
+      },
+      "d6subd6" => {:alias => "d6.masterd6.vbox", :core => "6", :master => "masterd6.vbox"},
+      "d7subd6" => {:alias => "d7.masterd6.vbox", :core => "7", :master => "masterd6.vbox"},
+      "masterd7" => {
+        :alias => "masterd7.vbox",
+        :core => "7",
+        :master => "masterd7.vbox",
+        :subs => ["d6.masterd7.vbox", "d7.masterd7.vbox"]
+      },
+      "d6subd7" => {:alias => "d6.masterd7.vbox", :core => "6", :master => "masterd7.vbox"},
+      "d7subd7" => {:alias => "d7.masterd7.vbox", :core => "7", :master => "masterd7.vbox"}
     }
   })
   end

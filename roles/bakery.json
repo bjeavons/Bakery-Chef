@@ -12,22 +12,5 @@
   ],
   "description": "A Bakery-enabled cluster of Drupal sites",
   "chef_type": "role",
-  "override_attributes": {
-    "mysql": {
-      "server_root_password": "1234"
-    },
-    "apache": {
-      "prefork": {
-        "maxspareservers": 5,
-        "minspareservers": 5,
-        "serverlimit": 400,
-        "startservers": 5,
-        "maxclients": 150,
-        "maxrequestsperchild": 0
-      },
-      "listen_ports": [
-        "80"
-      ]
-    }
-  }
+  "override_attributes": {}
 }
