@@ -22,7 +22,9 @@ Vagrant::Config.run do |config|
       "drupal_password" => "bakery"
     },
     :drupal => {
-      "admin_password" => "1234"
+      "admin_password" => "1234",
+      "test_name" => "test1",
+      "test_password" => "1234",
     },
     :sites => {
       "masterd6" => {

@@ -1,5 +1,4 @@
 # Automatically prepare vhosts for drupal sites.
-# TODO Make this configurable per host.
 require_recipe "hosts"
 require_recipe "apache2"
 

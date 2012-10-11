@@ -7,8 +7,10 @@
     "role[db-server]",
     "role[web-server]",
     "recipe[drush]",
-    "recipe[sites::bakery]",
-    "recipe[sites::apps]"
+    "recipe[bakery::common]",
+    "recipe[bakery::bakery]",
+    "recipe[bakery::apps]",
+    "recipe[bakery::dnsmasq]"
   ],
   "description": "A Bakery-enabled cluster of Drupal sites",
   "chef_type": "role",
