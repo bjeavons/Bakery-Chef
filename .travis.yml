@@ -2,9 +2,6 @@ language: php
 php:
   - "5.4"
 before_script:
-  - uname -a
-  - dpkg --get-selections
-  - gem list
-  - sudo chef-solo
+  - sudo chef-solo -c config/solo.rb -j config/node.json
 script:
-  - echo 'hi mom'
+  - cucumber tests/bakery/features
