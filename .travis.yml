@@ -1,0 +1,10 @@
+language: php
+php:
+  - "5.4"
+before_script:
+  - uname -a
+  - dpkg --get-selections
+  - gem list
+  - sudo chef-solo
+script:
+  - echo 'hi mom'
