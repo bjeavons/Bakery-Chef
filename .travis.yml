@@ -2,6 +2,9 @@ language: php
 php:
   - "5.4"
 before_script:
+  - phpenv global system
+  - rm -rf cookbooks/percona
   - sudo chef-solo -c config/solo.rb -j config/node.json
+  - bundle install
 script:
-  - cucumber tests/bakery/features
+  - bundle exec cucumber tests/bakery/features

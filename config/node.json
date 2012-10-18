@@ -1,11 +1,12 @@
 {
   "run_list": [
+    "recipe[mysql]",
     "role[bakery]"
   ],
   "www_root":"/var/www",
   "mysql":{
     "drupal_user":"bakery",
-    "server_root_password":"1234",
+    "server_root_password":"",
     "drupal_password":"bakery"
   },
   "drupal":{
