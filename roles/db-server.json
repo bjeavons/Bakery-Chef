@@ -4,8 +4,8 @@
   },
   "json_class": "Chef::Role",
   "run_list": [
-    "recipe[percona]",
-    "recipe[percona::server]"
+    "recipe[mysql]",
+    "recipe[mysql::server]"
   ],
   "description": "",
   "chef_type": "role"
