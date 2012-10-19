@@ -86,6 +86,5 @@ When /^I click "(.*?)"$/ do |text|
 end
 
 Then /^I should not see a link containing the text "(.*?)"$/ do |text|
-  #!find_link(text).visible? 
-  page.should_not have_content(text)
+  page.should have_no_content(text)
 end
