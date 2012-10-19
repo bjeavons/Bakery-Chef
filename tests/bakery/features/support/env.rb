@@ -8,4 +8,7 @@ begin require 'rspec/expectations'; rescue LoadError; require 'spec/expectations
 
 Capybara.default_driver = :poltergeist
 
+# Can be slow with empty caches, give it some time.
+Capybara.default_wait_time = 120
+
 #Usually, we would just use an environment variable for that (ENV['SOMETHING'])
