@@ -3,8 +3,7 @@
 #
 #repo_root = "#{Dir.tmpdir}/chefsolo"
 
-# Extra debugging till it works consistently.
-log_level          :debug
+# log_level          :debug
 log_location       STDOUT
 
 base_path = File.expand_path(File.join(File.dirname(__FILE__), ".."))
