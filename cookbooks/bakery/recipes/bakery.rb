@@ -2,12 +2,48 @@ require_recipe "mysql"
 require_recipe "drush"
 require_recipe "drush_make"
 
+# Add VM drush command file
+cookbook_file "/home/vagrant/.drush/vm.drush.inc" do
+  source "vm.drush.inc"
+  owner "vagrant"
+  group "vagrant"
+  mode "0644"
+end
+
+# Create sites_destroy script
+template "/usr/local/bin/sites_destroy.sh" do
+  sites = []
+  node[:sites].each do |name, attrs|
+    sites << name
+  end
+  sites = sites.join(' ')
+  source "sites_destroy.erb"
+  variables(
+    :sites => sites
+  )
+  owner "vagrant"
+  group "vagrant"
+  mode "0777"
+  action :create
+end
+
 node[:sites].each do |name, attrs|
   site_dir = "#{node[:www_root]}/#{name}"
   web_root = "#{site_dir}/htdocs"
+  domain = "#{attrs[:alias]}"
   make = "bakery-d#{attrs[:core]}.make"
   db_url = "mysql://#{node[:mysql][:drupal_user]}:#{node[:mysql][:drupal_password]}@localhost/#{name}"
-  cookie_domain = ".#{attrs[:master]}"
+  master_url = "http://#{attrs[:master]}"
+  master_domain = "#{attrs[:master]}"
+  slaves = []
+  if domain == master_domain
+    is_master = 1
+    attrs[:subs].each do |sub|
+      slaves << "http://#{sub}/"
+    end
+  else
+    is_master = 0
+  end
 
   # Create DB
   execute "add-#{name}-db" do
@@ -68,26 +104,36 @@ node[:sites].each do |name, attrs|
     else
       command "/usr/bin/mysql -u root -p#{node[:mysql][:server_root_password]} #{name} < /vagrant/cookbooks/bakery/files/default/#{name}.sql; echo \'$db_url = \"#{db_url}\";\' >> #{web_root}/sites/default/settings.php"
     end
+    ignore_failure true # @todo don't want this, just get past WD unable to send email problem on drush si
   end
 
-  # setup bakery
+  # setup drush alias
+  template "/home/vagrant/.drush/#{name}.aliases.drushrc.php" do
+    source "drush_alias.erb"
+    variables(
+      :root => web_root,
+      :uri => domain
+    )
+    owner "vagrant"
+    group "vagrant"
+    mode "0755"
+    action :create
+  end
+
+  # setup bakery @todo get vm_bakery feature working
   execute "#{name}-setup-bakery" do
-    if attrs[:master] == attrs[:alias]
+    if is_master
       # This is Bakery master
-      subs = []
-      attrs[:subs].each do |sub|
-        subs << "'http://#{sub}/'"
-      end
-      subs = subs.join(',')
-      command "cd #{web_root}; drush en -y bakery; drush vset -y bakery_is_master 1; drush vset -y bakery_key 'bakerysecret'; drush vset -y bakery_master 'http://#{attrs[:master]}/'; drush vset -y bakery_domain '#{cookie_domain}'; php -r \"print json_encode(array(#{subs}));\" | drush vset -y --format=json bakery_slaves -; drush cc all;"
+      slaves = slaves.join(',')
+      command "cd #{web_root}; drush en -y bakery; drush vset -y bakery_is_master 1; drush vset -y bakery_key 'bakerysecret'; drush vset -y bakery_master '#{master_url}/'; drush vset -y bakery_domain '.#{master_domain}'; php -r \"print json_encode(array(#{slaves}));\" | drush vset -y --format=json bakery_slaves -; drush cc all;"
     else
       # This is Bakery slave
-      command "cd #{web_root}; drush en -y bakery; drush vset -y bakery_is_master 0; drush vset -y bakery_key 'bakerysecret'; drush vset -y bakery_master 'http://#{attrs[:master]}/'; drush vset -y bakery_domain '#{cookie_domain}'; drush cc all;"
+      command "cd #{web_root}; drush en -y bakery; drush vset -y bakery_is_master 0; drush vset -y bakery_key 'bakerysecret'; drush vset -y bakery_master '#{master_url}/'; drush vset -y bakery_domain '.#{master_domain}'; drush cc all;"
     end
   end
 
-  # create test1 accounts on master
-  if attrs[:master] == attrs[:alias]
+  # setup master for testing
+  if is_master
     execute "create-#{name}-test-account" do
       command "cd #{web_root}; drush user-create #{node[:drupal][:test_name]} --mail='#{node[:drupal][:test_name]}@example.com' --password='#{node[:drupal][:test_password]}'"
       ignore_failure true
@@ -98,4 +144,5 @@ node[:sites].each do |name, attrs|
   #execute "#{name}-setup-hosts" do
   #  command "echo '127.0.0.1 #{name}' >> /etc/hosts"
   #end
+
 end
