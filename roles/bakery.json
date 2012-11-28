@@ -4,7 +4,6 @@
   },
   "json_class": "Chef::Role",
   "run_list": [
-    "role[db-server]",
     "role[web-server]",
     "recipe[drush]",
     "recipe[bakery::common]",

@@ -27,12 +27,14 @@ template "/usr/local/bin/sites_destroy.sh" do
   action :create
 end
 
+sql_pass_opt = !node[:mysql][:server_root_password].empty? ? "-p #{node[:mysql][:server_root_password]}" : ""
+sql_cmd = "/usr/bin/mysql -u root #{sql_pass_opt}"
+
 node[:sites].each do |name, attrs|
   site_dir = "#{node[:www_root]}/#{name}"
   web_root = "#{site_dir}/htdocs"
   domain = "#{attrs[:alias]}"
   make = "bakery-d#{attrs[:core]}.make"
-  db_url = "mysql://#{node[:mysql][:drupal_user]}:#{node[:mysql][:drupal_password]}@localhost/#{name}"
   master_url = "http://#{attrs[:master]}"
   master_domain = "#{attrs[:master]}"
   slaves = []
@@ -44,10 +46,12 @@ node[:sites].each do |name, attrs|
   else
     is_master = 0
   end
+  db_url = "mysqli://#{node[:mysql][:drupal_user]}:#{node[:mysql][:drupal_password]}@localhost/#{name}"
+  cookie_domain = ".#{attrs[:master]}"
 
-  # Create DB
+  # Create DB TODO Use Provider
   execute "add-#{name}-db" do
-    command "/usr/bin/mysql -u root -p#{node[:mysql][:server_root_password]} -e \"" +
+    command "#{sql_cmd} -e \"" +
         "CREATE DATABASE #{name};" +
         "GRANT ALL PRIVILEGES ON #{name}.* TO '#{node[:mysql][:drupal_user]}'@'localhost' IDENTIFIED BY '#{node[:mysql][:drupal_password]}';\""
     action :run
@@ -61,9 +65,10 @@ node[:sites].each do |name, attrs|
   end
 
   # Copy makefile
-  execute "copy-#{name}-makefile" do
-    command "cp /vagrant/cookbooks/bakery/files/default/#{make} #{site_dir}/#{make}"
-    not_if { File.exists?("#{site_dir}/#{make}") }
+  cookbook_file "copy-#{name}-makefile" do
+    path "#{site_dir}/#{make}"
+    source make
+    action :create_if_missing
   end
 
   # drush make site
@@ -97,12 +102,21 @@ node[:sites].each do |name, attrs|
   end
 
   # install site
-  execute "install-#{name}" do
-    # @todo get drush si working with Drupal 6
-    if attrs[:core] == "7"
+  if attrs[:core] == "7"
+    execute "install-#{name}" do
       command "cd #{web_root}; drush si --db-url=#{db_url} --account-pass=#{node[:drupal][:admin_password]} --site-name='#{name}' -y"
-    else
-      command "/usr/bin/mysql -u root -p#{node[:mysql][:server_root_password]} #{name} < /vagrant/cookbooks/bakery/files/default/#{name}.sql; echo \'$db_url = \"#{db_url}\";\' >> #{web_root}/sites/default/settings.php"
+    end
+  else
+    # Copy makefile
+    cookbook_file "copy-#{name}-sql" do
+      path "/tmp/#{name}.sql"
+      source "#{name}.sql"
+    end
+    execute "install-#{name}" do
+      command "#{sql_cmd} #{name} < /tmp/#{name}.sql"
+    end
+    execute "install-#{name}" do
+      command "echo \'$db_url = \"#{db_url}\";\' >> #{web_root}/sites/default/settings.php"
     end
     ignore_failure true # @todo don't want this, just get past WD unable to send email problem on drush si
   end
@@ -144,5 +158,4 @@ node[:sites].each do |name, attrs|
   #execute "#{name}-setup-hosts" do
   #  command "echo '127.0.0.1 #{name}' >> /etc/hosts"
   #end
-
 end
