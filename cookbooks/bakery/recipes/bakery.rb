@@ -39,12 +39,12 @@ node[:sites].each do |name, attrs|
   master_domain = "#{attrs[:master]}"
   slaves = []
   if domain == master_domain
-    is_master = 1
+    is_master = true
     attrs[:subs].each do |sub|
-      slaves << "http://#{sub}/"
+      slaves << "'http://#{sub}/'"
     end
   else
-    is_master = 0
+    is_master = false
   end
   db_url = "mysqli://#{node[:mysql][:drupal_user]}:#{node[:mysql][:drupal_password]}@localhost/#{name}"
   cookie_domain = ".#{attrs[:master]}"
@@ -133,12 +133,18 @@ node[:sites].each do |name, attrs|
   end
 
   # setup bakery @todo get vm_bakery feature working
-  execute "#{name}-setup-bakery" do
-    if is_master
+  if is_master
+    execute "#{name}-setup-bakery" do
+      # This is Bakery master
+      command "cd #{web_root}; drush en -y bakery; drush vset -y bakery_is_master 1; drush vset -y bakery_key 'bakerysecret'; drush vset -y bakery_master '#{master_url}/'; drush vset -y bakery_domain '.#{master_domain}';"
+    end
+    execute "#{name}-setup-bakery-slaves" do
       # This is Bakery master
       slaves = slaves.join(',')
-      command "cd #{web_root}; drush en -y bakery; drush vset -y bakery_is_master 1; drush vset -y bakery_key 'bakerysecret'; drush vset -y bakery_master '#{master_url}/'; drush vset -y bakery_domain '.#{master_domain}'; php -r \"print json_encode(array(#{slaves}));\" | drush vset -y --format=json bakery_slaves -; drush cc all;"
-    else
+      command "cd #{web_root}; php -r \"print json_encode(array(#{slaves}));\" | drush vset -y --format=json bakery_slaves -; drush cc all;"
+    end
+  else
+    execute "#{name}-setup-bakery" do
       # This is Bakery slave
       command "cd #{web_root}; drush en -y bakery; drush vset -y bakery_is_master 0; drush vset -y bakery_key 'bakerysecret'; drush vset -y bakery_master '#{master_url}/'; drush vset -y bakery_domain '.#{master_domain}'; drush cc all;"
     end
