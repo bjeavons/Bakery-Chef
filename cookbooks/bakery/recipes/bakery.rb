@@ -27,7 +27,7 @@ template "/usr/local/bin/sites_destroy.sh" do
   action :create
 end
 
-sql_pass_opt = !node[:mysql][:server_root_password].empty? ? "-p #{node[:mysql][:server_root_password]}" : ""
+sql_pass_opt = !node[:mysql][:server_root_password].empty? ? "-p#{node[:mysql][:server_root_password]}" : ""
 sql_cmd = "/usr/bin/mysql -u root #{sql_pass_opt}"
 
 node[:sites].each do |name, attrs|
@@ -107,7 +107,6 @@ node[:sites].each do |name, attrs|
       command "cd #{web_root}; drush si --db-url=#{db_url} --account-pass=#{node[:drupal][:admin_password]} --site-name='#{name}' -y"
     end
   else
-    # Copy makefile
     cookbook_file "copy-#{name}-sql" do
       path "/tmp/#{name}.sql"
       source "#{name}.sql"
@@ -118,7 +117,6 @@ node[:sites].each do |name, attrs|
     execute "install-#{name}" do
       command "echo \'$db_url = \"#{db_url}\";\' >> #{web_root}/sites/default/settings.php"
     end
-    ignore_failure true # @todo don't want this, just get past WD unable to send email problem on drush si
   end
 
   # setup drush alias
