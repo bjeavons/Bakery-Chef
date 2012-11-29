@@ -1,6 +1,6 @@
 Bakery-enabled cluster of Drupal sites for Bakery testing using Vagrant and Chef.
 
-[![Build Status](https://secure.travis-ci.org/glennpratt/Bakery-Chef.png)](http://travis-ci.org/glennpratt/Bakery-Chef)
+[![Build Status](https://secure.travis-ci.org/bjeavons/Bakery-Chef.png)](http://travis-ci.org/bjeavons/Bakery-Chef)
 
 ## Installation
 
