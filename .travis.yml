@@ -9,3 +9,5 @@ before_script:
   - bundle exec cucumber --quiet --no-source tests/bakery/features || true
 script:
   - bundle exec cucumber --no-source tests/bakery/features
+notifications:
+  email: false
