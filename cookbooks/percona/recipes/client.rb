@@ -24,5 +24,5 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-require_recipe "percona::percona_repo"
-require_recipe "mysql::client"
+include_recipe "percona::percona_repo"
+include_recipe "mysql::client"
