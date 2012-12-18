@@ -32,3 +32,8 @@ Drupal sites come pre-installed with latest Bakery 2.x development release.
 
 Cucumber tests of SSO and basic data synchronization are available in the /tests directory.
 
+1. [Install Cucumber](https://github.com/cucumber/cucumber/wiki/Install)
+1. [Install PhantomJS](http://phantomjs.org/download.html)
+1. `gem install poltergeist`
+1. `gem install rspec-expectations`
+1. Run tests: `cucumber tests/bakery/features`
