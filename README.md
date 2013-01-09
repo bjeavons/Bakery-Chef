@@ -10,9 +10,8 @@ Bakery-enabled cluster of Drupal sites for Bakery testing using Vagrant and Chef
 1. `cd Bakery-Chef`
 1. `vagrant up`
 
-Running `vagrant up` will take awhile because it downloads the VM image. It may 
-fail with message about mysql returning status 1. Just type `vagrant provision`
-to restart.
+Running `vagrant up` will take awhile because it downloads the VM image. If it fails try running `vagrant provision`
+to retry the build.
 
 When it is done you can connect to the vm server using `vagrant ssh`.
 
