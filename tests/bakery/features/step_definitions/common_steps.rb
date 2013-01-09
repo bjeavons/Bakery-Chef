@@ -27,6 +27,10 @@ Given /^I am visiting the homepage$/ do
   visit('/')
 end
 
+Then /^I should be on the site "(.*?)"$/ do |site|
+  page.current_host.chomp('/').should == site.chomp('/')
+end
+
 Then /^I should (not )?see a title containing the word "(.*?)"$/ do |present, text|
   if present
     page.should_not have_css('title', :text => text)
@@ -62,7 +66,39 @@ Given /^I log in as user "(.*?)" with password "(.*?)"$/ do |user, pass|
     fill_in 'Username', :with => user
     fill_in 'Password', :with => pass
   end
+  click_button('Log in')
+end
+
+Given /^I enter user "(.*?)" with password "(.*?)"$/ do |user, pass|
+  within('#user-login') do
+    fill_in 'Username', :with => user
+    fill_in 'Password', :with => pass
+  end
   click_button('Log in') 
+end
+
+Given /^I register as a test user$/ do
+  id = 4.times.map { rand(9) }.join
+  username = "test#{id}"
+  mail = "#{username}@example.com"
+  pass = 1234
+  if page.has_selector?('#user-register')
+    within('#user-register') do
+      fill_in 'Username', :with => username
+      fill_in 'E-mail address', :with => mail
+      fill_in 'Password', :with => pass
+      fill_in 'Confirm password', :with => pass
+    end
+    click_button('Create new account')
+  elsif page.has_selector?('#user-register-form')
+    within('#user-register-form') do
+      fill_in 'Username', :with => username
+      fill_in 'E-mail address', :with => mail
+      fill_in 'Password', :with => pass
+      fill_in 'Confirm password', :with => pass
+    end
+    click_button('Create new account')
+  end
 end
 
 Given /^I goto my account edit page$/ do

@@ -114,6 +114,9 @@ node[:sites].each do |name, attrs|
     execute "install-#{name}" do
       command "#{sql_cmd} #{name} < /tmp/#{name}.sql"
     end
+    execute "update-admin-user-email" do # fix for issue #4
+      command "#{sql_cmd} #{name} -e 'UPDATE users SET mail = \"admin@example.com\" WHERE uid = 1'"
+    end
     execute "install-#{name}" do
       command "echo \'$db_url = \"#{db_url}\";\' >> #{web_root}/sites/default/settings.php"
     end
@@ -156,6 +159,16 @@ node[:sites].each do |name, attrs|
       command "cd #{web_root}; drush user-create #{node[:drupal][:test_name]} --mail='#{node[:drupal][:test_name]}@example.com' --password='#{node[:drupal][:test_password]}'"
       ignore_failure true
     end
+  end
+
+  execute "enable-registration" do
+    command "cd #{web_root}; drush vset -y user_email_verification 0; drush -y vset user_registration 1"
+    ignore_failure true
+  end
+
+  execute "clear-cache" do
+    command "cd #{web_root}; drush cc all"
+    ignore_failure true
   end
 
   # setup /etc/hosts @todo this isn't working https://github.com/bjeavons/Bakery-Chef/issues/2
