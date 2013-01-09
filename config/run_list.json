@@ -1,5 +1,7 @@
 {
   "run_list": [
+     "recipe[apt]",
+     "role[db-server]",
      "role[bakery]"
   ]
 }
