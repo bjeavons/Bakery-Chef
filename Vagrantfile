@@ -44,7 +44,25 @@ Vagrant::Config.run do |config|
         :subs => ["d6.masterd7.vbox", "d7.masterd7.vbox"]
       },
       "d6subd7" => {:alias => "d6.masterd7.vbox", :core => "6", :master => "masterd7.vbox"},
-      "d7subd7" => {:alias => "d7.masterd7.vbox", :core => "7", :master => "masterd7.vbox"}
+      "d7subd7" => {:alias => "d7.masterd7.vbox", :core => "7", :master => "masterd7.vbox"},
+      "smasterd7" => {
+        :alias => "smasterd7.vbox",
+        :core => "7",
+        :master => "smasterd7.vbox",
+        :subs => ["d6.smasterd7.vbox", "d7.smasterd7.vbox"],
+        :secure => true
+      },
+      "sd6subd7" => {:alias => "d6.smasterd7.vbox", :core => "6", :master => "smasterd7.vbox", :secure => true},
+      "sd7subd7" => {:alias => "d7.smasterd7.vbox", :core => "7", :master => "smasterd7.vbox", :secure => true},
+      "smasterd6" => {
+        :alias => "smasterd6.vbox",
+        :core => "6",
+        :master => "smasterd6.vbox",
+        :subs => ["d6.smasterd6.vbox", "d7.smasterd6.vbox"],
+        :secure => true
+      },
+      "sd6subd6" => {:alias => "d6.smasterd6.vbox", :core => "6", :master => "smasterd6.vbox", :secure => true},
+      "sd7subd6" => {:alias => "d7.smasterd6.vbox", :core => "7", :master => "smasterd6.vbox", :secure => true}
     }
   })
   end
