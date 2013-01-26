@@ -42,3 +42,4 @@ file "/home/vagrant/.my.cnf" do
   content "[client]\nuser=root\npass=#{node[:mysql][:server_root_password]}"
   action :create
 end
+
