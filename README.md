@@ -25,6 +25,15 @@ the following sites that you should add to your /etc/hosts file (all at 172.22.2
 * d6.masterd7.vbox - Drupal 6 slave of Drupal 7 master
 * d7.masterd7.vbox - Drupal 7 slave of Drupal 7 master
 
+Sites over SSL (self-signed cert)
+
+* smasterd6.vbox - Drupal 6 secure master
+* d6.smasterd6.vbox - Drupal 6 secure slave of Drupal 6 master
+* d7.smasterd6.vbox - Drupal 7 secure slave of Drupal 6 master
+* smasterd7.vbox - Drupal 7 secure master
+* d6.smasterd7.vbox - Drupal 6 secure slave of Drupal 7 master
+* d7.smasterd7.vbox - Drupal 7 secure slave of Drupal 7 master
+
 Drupal sites come pre-installed with latest Bakery 2.x development release.
 
 ## Testing
