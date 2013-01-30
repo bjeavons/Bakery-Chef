@@ -9,62 +9,21 @@ Vagrant::Config.run do |config|
   # Download the box automatically from S3.
   config.vm.box_url = "http://msonnabaum-public.s3.amazonaws.com/ms-ubuntu-11.10.box"
 
+  # Uncomment the following lines to enable NFS sharing of the Bakery module from
+  # the host. After running `vagrant up` or `vagrant provision` run `rake share`
+  # to set the Drupal sites to using the shared Bakery modules.
+  #config.vm.share_folder 'bakery6', '/var/bakery/bakery6', Pathname.new("shared/bakery6").realpath.to_s, :create => true, :nfs => true
+  #config.vm.share_folder 'bakery7', '/var/bakery/bakery7', Pathname.new("shared/bakery7").realpath.to_s, :create => true, :nfs => true
+
   config.vm.provision :chef_solo do |chef|
+    bakery = JSON.parse(File.read("config/node.json"))
     chef.cookbooks_path = ["cookbooks"]
     chef.roles_path = "roles"
     chef.data_bags_path = "data_bags"
     chef.add_recipe("apt")
     chef.add_role("db-server")
     chef.add_role("bakery")
-    chef.json.merge!({
-    :www_root => '/var/www',
-    :mysql => {
-      "server_root_password" => "1234",
-      "drupal_user" => "bakery",
-      "drupal_password" => "bakery"
-    },
-    :drupal => {
-      "admin_password" => "1234",
-      "test_name" => "test1",
-      "test_password" => "1234",
-    },
-    :sites => {
-      "masterd6" => {
-        :alias => "masterd6.vbox",
-        :core => "6",
-        :master => "masterd6.vbox",
-        :subs => ["d6.masterd6.vbox", "d7.masterd6.vbox"]
-      },
-      "d6subd6" => {:alias => "d6.masterd6.vbox", :core => "6", :master => "masterd6.vbox"},
-      "d7subd6" => {:alias => "d7.masterd6.vbox", :core => "7", :master => "masterd6.vbox"},
-      "masterd7" => {
-        :alias => "masterd7.vbox",
-        :core => "7",
-        :master => "masterd7.vbox",
-        :subs => ["d6.masterd7.vbox", "d7.masterd7.vbox"]
-      },
-      "d6subd7" => {:alias => "d6.masterd7.vbox", :core => "6", :master => "masterd7.vbox"},
-      "d7subd7" => {:alias => "d7.masterd7.vbox", :core => "7", :master => "masterd7.vbox"},
-      "smasterd7" => {
-        :alias => "smasterd7.vbox",
-        :core => "7",
-        :master => "smasterd7.vbox",
-        :subs => ["d6.smasterd7.vbox", "d7.smasterd7.vbox"],
-        :secure => true
-      },
-      "sd6subd7" => {:alias => "d6.smasterd7.vbox", :core => "6", :master => "smasterd7.vbox", :secure => true},
-      "sd7subd7" => {:alias => "d7.smasterd7.vbox", :core => "7", :master => "smasterd7.vbox", :secure => true},
-      "smasterd6" => {
-        :alias => "smasterd6.vbox",
-        :core => "6",
-        :master => "smasterd6.vbox",
-        :subs => ["d6.smasterd6.vbox", "d7.smasterd6.vbox"],
-        :secure => true
-      },
-      "sd6subd6" => {:alias => "d6.smasterd6.vbox", :core => "6", :master => "smasterd6.vbox", :secure => true},
-      "sd7subd6" => {:alias => "d7.smasterd6.vbox", :core => "7", :master => "smasterd6.vbox", :secure => true}
-    }
-  })
+    chef.json.merge!(bakery)
   end
 
   # Run the host with a host-only IP of 172.22.22.22.
