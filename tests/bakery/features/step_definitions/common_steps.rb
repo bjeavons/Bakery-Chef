@@ -31,6 +31,12 @@ Then /^I should be on the site "(.*?)"$/ do |site|
   page.current_host.chomp('/').should == site.chomp('/')
 end
 
+Then /^I should have "(.*?)" in the URL$/ do |string|
+  #current_url.should have_text(string) 
+ # uri = URI.parse(current_url)
+  current_url.should include(string)
+end
+
 Then /^I should (not )?see a title containing the word "(.*?)"$/ do |present, text|
   if present
     page.should_not have_css('title', :text => text)
