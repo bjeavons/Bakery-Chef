@@ -28,7 +28,6 @@ Given /^I am visiting the homepage$/ do
 end
 
 When /^I visit path "(.*?)"$/ do |path|
-  puts path
   visit(path)
 end
 
