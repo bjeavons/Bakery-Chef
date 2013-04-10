@@ -27,13 +27,16 @@ Given /^I am visiting the homepage$/ do
   visit('/')
 end
 
+When /^I visit path "(.*?)"$/ do |path|
+  puts path
+  visit(path)
+end
+
 Then /^I should be on the site "(.*?)"$/ do |site|
   page.current_host.chomp('/').should == site.chomp('/')
 end
 
 Then /^I should have "(.*?)" in the URL$/ do |string|
-  #current_url.should have_text(string) 
- # uri = URI.parse(current_url)
   current_url.should include(string)
 end
 
@@ -62,6 +65,10 @@ Then /^I should see the text "(.*?)"$/ do |text|
   page.should have_content(text)
 end
 
+Then /^I should not see the text "(.*?)"$/ do |text|
+  page.should have_no_content(text)
+end
+
 Then /^I should see the (.*?) form value "(.*?)"$/ do |name, text|
   page.has_field?(name, :value => text)
 end
@@ -77,6 +84,14 @@ end
 
 Given /^I enter user "(.*?)" with password "(.*?)"$/ do |user, pass|
   within('#user-login') do
+    fill_in 'Username', :with => user
+    fill_in 'Password', :with => pass
+  end
+  click_button('Log in') 
+end
+
+Given /^I login with "(.*?)" and "(.*?)"$/ do |user, pass|
+  within('#user-login-form') do
     fill_in 'Username', :with => user
     fill_in 'Password', :with => pass
   end
@@ -129,4 +144,8 @@ end
 
 Then /^I should not see a link containing the text "(.*?)"$/ do |text|
   page.should have_no_content(text)
+end
+
+Then /^I should have a response code of (.*?)$/ do |status_code|
+  page.status_code.should == status_code
 end
