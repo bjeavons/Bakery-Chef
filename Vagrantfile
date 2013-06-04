@@ -14,7 +14,7 @@ Vagrant::Config.run do |config|
   # to set the Drupal sites to using the shared Bakery modules.
   #config.vm.share_folder 'bakery6', '/var/bakery/bakery6', Pathname.new("shared/bakery6").realpath.to_s, :create => true, :nfs => true
   #config.vm.share_folder 'bakery7', '/var/bakery/bakery7', Pathname.new("shared/bakery7").realpath.to_s, :create => true, :nfs => true
-
+  config.vm.provision :shell, :inline => 'apt-get update'
   config.vm.provision :chef_solo do |chef|
     bakery = JSON.parse(File.read("config/node.json"))
     chef.cookbooks_path = ["cookbooks"]
