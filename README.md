@@ -18,21 +18,19 @@ When it is done you can connect to the vm server using `vagrant ssh`.
 The vm's apache server will be accessible at 172.22.22.22 and it will create
 the following sites that you should add to your /etc/hosts file (all at 172.22.22.22):
 
-* masterd6.vbox - Drupal 6 master
-* d6.masterd6.vbox - Drupal 6 slave of Drupal 6 master
-* d7.masterd6.vbox - Drupal 7 slave of Drupal 6 master
-* masterd7.vbox - Drupal 7 master
-* d6.masterd7.vbox - Drupal 6 slave of Drupal 7 master
-* d7.masterd7.vbox - Drupal 7 slave of Drupal 7 master
 
-Sites over SSL (self-signed cert)
-
-* smasterd6.vbox - Drupal 6 secure master
-* d6.smasterd6.vbox - Drupal 6 secure slave of Drupal 6 master
-* d7.smasterd6.vbox - Drupal 7 secure slave of Drupal 6 master
-* smasterd7.vbox - Drupal 7 secure master
-* d6.smasterd7.vbox - Drupal 6 secure slave of Drupal 7 master
-* d7.smasterd7.vbox - Drupal 7 secure slave of Drupal 7 master
+    172.22.22.22 masterd6.vbox
+    172.22.22.22 d6.masterd6.vbox
+    172.22.22.22 d7.masterd6.vbox
+    172.22.22.22 masterd7.vbox
+    172.22.22.22 d6.masterd7.vbox
+    172.22.22.22 d7.masterd7.vbox
+    172.22.22.22 smasterd6.vbox
+    172.22.22.22 d6.smasterd6.vbox
+    172.22.22.22 d7.smasterd6.vbox
+    172.22.22.22 smasterd7.vbox
+    172.22.22.22 d6.smasterd7.vbox
+    172.22.22.22 d7.smasterd7.vbox
 
 Drupal sites come pre-installed with latest Bakery 2.x development release.
 
