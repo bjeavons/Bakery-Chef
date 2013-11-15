@@ -1,0 +1,55 @@
+<?php
+/**
+ * @file
+ * vm_bakery.strongarm.inc
+ */
+
+/**
+ * Implements hook_strongarm().
+ */
+function vm_bakery_strongarm() {
+  $export = array();
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bakery_domain';
+  $strongarm->value = '.<%= @domain %>';
+  $export['bakery_domain'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bakery_is_master';
+  $strongarm->value = <%= @is_master %>;
+  $export['bakery_is_master'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bakery_key';
+  $strongarm->value = 'bakerysecret';
+  $export['bakery_key'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bakery_master';
+  $strongarm->value = '<%= @master %>/';
+  $export['bakery_master'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bakery_slaves';
+  $strongarm->value = array(
+    <% if !@slaves.empty? %>
+      <% @slaves.each_index do |k| %>
+        <%= k %> => '<%= @slaves[k] %>/',
+      <% end %>
+    <% end %>
+  );
+  $export['bakery_slaves'] = $strongarm;
+
+  return $export;
+}

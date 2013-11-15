@@ -1,6 +1,8 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "precise32"
-  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+  #config.berkshelf.enabled = true
+
+  config.vm.box = "precise64-omnibus"
+  config.vm.box_url = "https://s3.amazonaws.com/gsc-vagrant-boxes/ubuntu-12.04-omnibus-chef.box"
 
   # Uncomment the following lines to enable NFS sharing of the Bakery module from
   # the host. After running `vagrant up` or `vagrant provision` run `rake share`
@@ -9,14 +11,11 @@ Vagrant.configure("2") do |config|
   #config.vm.synced_folder Pathname.new("shared/bakery7").realpath.to_s, "/var/bakery/bakery7/", :create => true, :nfs => true
 
   config.vm.provision :chef_solo do |chef|
-    bakery = JSON.parse(File.read("config/node.json"))
-    chef.cookbooks_path = ["cookbooks"]
+    myconfig = JSON.parse(File.read("config/node.json"))
+    chef.cookbooks_path = ["cookbooks", "vendor/cookbooks"]
     chef.roles_path = "roles"
     chef.data_bags_path = "data_bags"
-    chef.add_recipe("apt")
-    chef.add_role("db-server")
-    chef.add_role("bakery")
-    chef.json.merge!(bakery)
+    chef.json.merge!(myconfig)
   end
 
   # Run the host with a host-only IP of 172.22.22.22.

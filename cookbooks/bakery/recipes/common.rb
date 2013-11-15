@@ -1,8 +1,6 @@
-include_recipe "apt"
-
-php_pear "pear" do
-  action :upgrade
-end
+#php_pear "pear" do
+#  action :upgrade
+#end
 
 package "mcrypt" do
   action :install

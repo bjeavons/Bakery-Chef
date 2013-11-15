@@ -69,7 +69,7 @@ Then /^I should not see the text "(.*?)"$/ do |text|
 end
 
 Then /^I should see the (.*?) form value "(.*?)"$/ do |name, text|
-  page.has_field?(name, :value => text)
+  page.has_field?(name, :exact=> text)
 end
 
 Given /^I log in as user "(.*?)" with password "(.*?)"$/ do |user, pass|

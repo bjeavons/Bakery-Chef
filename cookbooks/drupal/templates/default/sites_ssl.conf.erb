@@ -1,8 +1,11 @@
-<VirtualHost *:80>
+<VirtualHost *:443>
   ServerName <%= @params[:server_name] %>
   ServerAlias <% @params[:server_aliases].each do |a| %><%= "#{a}" %> <% end %>
   DocumentRoot <%= @params[:docroot] %>
   RewriteEngine On
+
+	SSLEngine on
+  SSLCertificateFile /etc/apache2/apache.pem
   
   <Directory <%= @params[:docroot] %>>
     Options FollowSymLinks

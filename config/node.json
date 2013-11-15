@@ -1,12 +1,17 @@
 {
   "run_list": [
-    "recipe[mysql]",
-    "role[bakery]"
+    "role[web-server]",
+    "role[db-server]",
+    "role[dev]"
   ],
+  "fqdn":"masterd7.vbox",
+  "domain":"vbox",
   "www_root":"/var/www",
   "mysql":{
     "drupal_user":"bakery",
     "server_root_password":"1234",
+    "server_debian_password":"1234",
+    "server_repl_password":"1234",
     "drupal_password":"bakery"
   },
   "drupal":{
@@ -14,40 +19,88 @@
     "admin_password":"1234",
     "test_name":"test1"
   },
-  "sites":{
-    "masterd6":{
-        "alias":"masterd6.vbox",
-        "core":"6",
-        "master":"masterd6.vbox",
-        "subs":["d6.masterd6.vbox", "d7.masterd6.vbox"]
-      },
-      "d6subd6":{"alias":"d6.masterd6.vbox", "core":"6", "master":"masterd6.vbox"},
-      "d7subd6":{"alias":"d7.masterd6.vbox", "core":"7", "master":"masterd6.vbox"},
-      "masterd7":{
-        "alias":"masterd7.vbox",
-        "core":"7",
-        "master":"masterd7.vbox",
-        "subs":["d6.masterd7.vbox", "d7.masterd7.vbox"]
-      },
-      "d6subd7":{"alias":"d6.masterd7.vbox", "core":"6", "master":"masterd7.vbox"},
-      "d7subd7":{"alias":"d7.masterd7.vbox", "core":"7", "master":"masterd7.vbox"},
-      "smasterd7":{
-        "alias":"smasterd7.vbox",
-        "core":"7",
-        "master":"smasterd7.vbox",
-        "subs":["d6.smasterd7.vbox", "d7.smasterd7.vbox"],
-        "secure":true
-      },
-      "sd6subd7":{"alias":"d6.smasterd7.vbox", "core":"6", "master":"smasterd7.vbox", "secure":true},
-      "sd7subd7":{"alias":"d7.smasterd7.vbox", "core":"7", "master":"smasterd7.vbox", "secure":true},
-      "smasterd6":{
-        "alias":"smasterd6.vbox",
-        "core":"6",
-        "master":"smasterd6.vbox",
-        "subs":["d6.smasterd6.vbox", "d7.smasterd6.vbox"],
-        "secure":true
-      },
-      "sd6subd6":{"alias":"d6.smasterd6.vbox", "core":"6", "master":"smasterd6.vbox", "secure":true},
-      "sd7subd6":{"alias":"d7.smasterd6.vbox", "core":"7", "master":"smasterd6.vbox", "secure":true}
-  }
+  "sites": [
+    {
+      "name":"masterd6",
+      "domain":"masterd6.vbox",
+      "core":"6",
+      "master":"masterd6.vbox",
+      "subs":["d6.masterd6.vbox", "d7.masterd6.vbox"]
+    },
+    {
+      "name":"d6subd6",
+      "domain":["d6.masterd6.vbox"],
+      "core":"6",
+      "master":"masterd6.vbox"
+    },
+    {
+      "name":"d7subd6",
+      "domain":"d7.masterd6.vbox",
+      "core":"7",
+      "master":"masterd6.vbox"
+    },
+    {
+      "name":"masterd7",
+      "domain":"masterd7.vbox",
+      "core":"7",
+      "master":"masterd7.vbox",
+      "subs":["d6.masterd7.vbox", "d7.masterd7.vbox"]
+    },
+    {
+      "name":"d6subd7",
+      "domain":"d6.masterd7.vbox",
+      "core":"6",
+      "master":"masterd7.vbox"
+    },
+    {
+      "name":"d7subd7",
+      "domain":"d7.masterd7.vbox",
+      "core":"7",
+      "master":"masterd7.vbox"
+    },
+    {
+      "name":"smasterd6",
+      "domain":"smasterd6.vbox",
+      "core":"6",
+      "master":"smasterd6.vbox",
+      "subs":["d6.smasterd6.vbox", "d7.smasterd6.vbox"],
+      "secure":true
+    },
+    {
+      "name":"sd6subd6",
+      "domain":"d6.smasterd6.vbox",
+      "core":"6",
+      "master":"smasterd6.vbox",
+      "secure":true
+    },
+    {
+      "name":"sd7subd6",
+      "domain":"d7.smasterd6.vbox",
+      "core":"7",
+      "master":"smasterd6.vbox",
+      "secure":true
+    },
+    {
+      "name":"smasterd7",
+      "domain":"smasterd7.vbox",
+      "core":"6",
+      "master":"smasterd7.vbox",
+      "subs":["d6.smasterd7.vbox", "d7.smasterd7.vbox"],
+      "secure":true
+    },
+    {
+      "name":"sd6subd7",
+      "domain":"d6.smasterd7.vbox",
+      "core":"6",
+      "master":"smasterd7.vbox",
+      "secure":true
+    },
+    {
+      "name":"sd7subd7",
+      "domain":"d7.smasterd7.vbox",
+      "core":"7",
+      "master":"smasterd7.vbox",
+      "secure":true
+    }
+  ]
 }

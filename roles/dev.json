@@ -7,10 +7,7 @@
   "json_class": "Chef::Role",
   "run_list": [
     "recipe[drush]",
-    "recipe[bakery::common]",
-    "recipe[bakery::bakery]",
-    "recipe[bakery::apps]",
-    "recipe[bakery::dnsmasq]"
+    "recipe[drupal]"
   ],
   "override_attributes": {}
 }

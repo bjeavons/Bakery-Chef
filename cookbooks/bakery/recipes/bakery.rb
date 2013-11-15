@@ -1,6 +1,5 @@
 require_recipe "mysql"
 require_recipe "drush"
-require_recipe "drush_make"
 
 # Add VM drush command file
 cookbook_file "/home/vagrant/.drush/vm.drush.inc" do

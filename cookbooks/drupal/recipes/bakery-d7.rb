@@ -1,8 +1,8 @@
 # Deploy Bakery D7
 # TODO Move this to a definition with parameters.
-require_recipe "mysql"
-require_recipe "drush"
-require_recipe "drush_make"
+include_recipe "mysql"
+include_recipe "drush"
+include_recipe "drush_make"
 
 # Add an admin user to mysql
 execute "add-admin-user" do
