@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :chef_solo do |chef|
     myconfig = JSON.parse(File.read("config/node.json"))
-    chef.cookbooks_path = ["cookbooks", "vendor/cookbooks"]
+    chef.cookbooks_path = ["site-cookbooks", "cookbooks"]
     chef.roles_path = "roles"
     chef.data_bags_path = "data_bags"
     chef.json.merge!(myconfig)
