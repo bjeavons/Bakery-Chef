@@ -5,8 +5,8 @@ include_recipe "apache2"
 domains = []
 node[:sites].each do |site|
   domains << site[:domain]
-  # create htdocs
-  directory "#{node[:www_root]}/#{site[:name]}/htdocs" do
+  # create each site directory
+  directory "#{node[:www_root]}/#{site[:name]}" do
     owner node['apache']['user']
     group "vagrant"
     mode 00775

@@ -2,17 +2,19 @@
   "run_list": [
     "role[web-server]",
     "role[db-server]",
-    "role[dev]"
+    "role[bakery]"
   ],
   "fqdn":"masterd7.vbox",
   "domain":"vbox",
   "www_root":"/var/www",
   "mysql":{
-    "drupal_user":"bakery",
     "server_root_password":"1234",
     "server_debian_password":"1234",
-    "server_repl_password":"1234",
-    "drupal_password":"bakery"
+    "server_repl_password":"1234"
+  },
+  "db":{
+    "user":"bakery",
+    "password":"bakery"
   },
   "drupal":{
     "test_password":"1234",
@@ -83,7 +85,7 @@
     {
       "name":"smasterd7",
       "domain":"smasterd7.vbox",
-      "core":"6",
+      "core":"7",
       "master":"smasterd7.vbox",
       "subs":["d6.smasterd7.vbox", "d7.smasterd7.vbox"],
       "secure":true
