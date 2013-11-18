@@ -7,8 +7,8 @@ Vagrant.configure("2") do |config|
   # Uncomment the following lines to enable NFS sharing of the Bakery module from
   # the host. After running `vagrant up` or `vagrant provision` run `rake share`
   # to set the Drupal sites to using the shared Bakery modules.
-  config.vm.synced_folder Pathname.new("shared/bakery6").realpath.to_s, "/var/bakery/bakery6", :create => true, :nfs => true
-  config.vm.synced_folder Pathname.new("shared/bakery7").realpath.to_s, "/var/bakery/bakery7/", :create => true, :nfs => true
+  #config.vm.synced_folder Pathname.new("shared/bakery6").realpath.to_s, "/var/bakery/bakery6", :create => true, :nfs => true
+  #config.vm.synced_folder Pathname.new("shared/bakery7").realpath.to_s, "/var/bakery/bakery7/", :create => true, :nfs => true
 
   config.vm.provision :chef_solo do |chef|
     myconfig = JSON.parse(File.read("config/node.json"))
