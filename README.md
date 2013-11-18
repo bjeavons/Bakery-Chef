@@ -1,13 +1,13 @@
 Bakery-enabled cluster of Drupal sites for Bakery testing using Vagrant and Chef.
 
-[![Build Status](https://secure.travis-ci.org/bjeavons/Bakery-Chef.png)](http://travis-ci.org/bjeavons/Bakery-Chef)
-
 ## Installation
 
 1. [Download Virtual Box](https://www.virtualbox.org/wiki/Downloads)
-1. [Download & install vagrant](http://downloads.vagrantup.com/tags/v1.0.3)
+1. [Download & install vagrant](http://downloads.vagrantup.com/)
 1. `git clone git://github.com/bjeavons/Bakery-Chef.git`
 1. `cd Bakery-Chef`
+1. `gem install librarian-chef`
+2. `librarian-chef install`
 1. `vagrant up`
 
 Running `vagrant up` will take awhile because it downloads the VM image. If it fails try running `vagrant provision`
