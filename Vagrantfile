@@ -1,6 +1,4 @@
 Vagrant.configure("2") do |config|
-  #config.berkshelf.enabled = true
-
   config.vm.box = "precise64-omnibus"
   config.vm.box_url = "https://s3.amazonaws.com/gsc-vagrant-boxes/ubuntu-12.04-omnibus-chef.box"
 
