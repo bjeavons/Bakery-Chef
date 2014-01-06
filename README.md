@@ -36,6 +36,10 @@ Sites over SSL (self-signed cert)
 
 Drupal sites come pre-installed with latest Bakery 2.x development release.
 
+Edit the Vagrantfile to symlink Bakery modules from your host to ease development.
+
+All admin accounts are username: admin and password: 1234
+
 ## Testing
 
 Cucumber tests of SSO and basic data synchronization are available in the /tests directory.
