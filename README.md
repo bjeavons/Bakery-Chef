@@ -1,18 +1,17 @@
 Bakery-enabled cluster of Drupal sites for Bakery testing using Vagrant and Chef.
 
-[![Build Status](https://secure.travis-ci.org/bjeavons/Bakery-Chef.png)](http://travis-ci.org/bjeavons/Bakery-Chef)
-
 ## Installation
 
 1. [Download Virtual Box](https://www.virtualbox.org/wiki/Downloads)
-1. [Download & install vagrant](http://downloads.vagrantup.com/tags/v1.0.3)
+1. [Download & install vagrant](http://downloads.vagrantup.com/)
 1. `git clone git://github.com/bjeavons/Bakery-Chef.git`
 1. `cd Bakery-Chef`
+1. `gem install librarian-chef`
+2. `librarian-chef install`
 1. `vagrant up`
 
-Running `vagrant up` will take awhile because it downloads the VM image. It may 
-fail with message about mysql returning status 1. Just type `vagrant provision`
-to restart.
+Running `vagrant up` will take awhile because it downloads the VM image. If it fails try running `vagrant provision`
+to retry the build.
 
 When it is done you can connect to the vm server using `vagrant ssh`.
 
@@ -26,7 +25,20 @@ the following sites that you should add to your /etc/hosts file (all at 172.22.2
 * d6.masterd7.vbox - Drupal 6 slave of Drupal 7 master
 * d7.masterd7.vbox - Drupal 7 slave of Drupal 7 master
 
+Sites over SSL (self-signed cert)
+
+* smasterd6.vbox - Drupal 6 secure master
+* d6.smasterd6.vbox - Drupal 6 secure slave of Drupal 6 master
+* d7.smasterd6.vbox - Drupal 7 secure slave of Drupal 6 master
+* smasterd7.vbox - Drupal 7 secure master
+* d6.smasterd7.vbox - Drupal 6 secure slave of Drupal 7 master
+* d7.smasterd7.vbox - Drupal 7 secure slave of Drupal 7 master
+
 Drupal sites come pre-installed with latest Bakery 2.x development release.
+
+Edit the Vagrantfile to symlink Bakery modules from your host to ease development.
+
+All admin accounts are username: admin and password: 1234
 
 ## Testing
 

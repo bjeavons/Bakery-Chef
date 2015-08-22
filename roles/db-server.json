@@ -4,8 +4,11 @@
   },
   "json_class": "Chef::Role",
   "run_list": [
+    "recipe[apt]",
     "recipe[mysql]",
-    "recipe[mysql::server]"
+    "recipe[mysql::client]",
+    "recipe[mysql::server]",
+    "recipe[database::mysql]"
   ],
   "description": "",
   "chef_type": "role"

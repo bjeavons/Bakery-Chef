@@ -1,17 +1,13 @@
 {
   "name": "bakery",
+  "description": "A Bakery-enabled cluster of Drupal sites",
+  "chef_type": "role",
   "default_attributes": {
   },
   "json_class": "Chef::Role",
   "run_list": [
-    "role[web-server]",
     "recipe[drush]",
-    "recipe[bakery::common]",
-    "recipe[bakery::bakery]",
-    "recipe[bakery::apps]",
-    "recipe[bakery::dnsmasq]"
+    "recipe[bakery]"
   ],
-  "description": "A Bakery-enabled cluster of Drupal sites",
-  "chef_type": "role",
   "override_attributes": {}
 }

@@ -34,4 +34,3 @@ Feature: SSO
     When I visit "http://masterd6.vbox"
     Then I should not see a link containing the text "My account"
     And I should not see a link containing the text "Log out"
- 

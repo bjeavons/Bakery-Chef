@@ -1,0 +1,15 @@
+name = VM Bakery
+description = Feature for Bakery testing in VM
+core = 7.x
+package = Features
+php = 5.2.4
+dependencies[] = features
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:1
+features[user_permission][] = change own username
+features[variable][] = bakery_domain
+features[variable][] = bakery_is_master
+features[variable][] = bakery_key
+features[variable][] = bakery_master
+features[variable][] = bakery_slaves
