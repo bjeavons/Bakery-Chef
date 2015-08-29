@@ -1,4 +1,3 @@
-include_recipe "hosts"
 include_recipe "apache2"
 
 # domains array used for /etc/hosts
@@ -48,4 +47,15 @@ ff00::0 ip6-mcastprefix
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 ff02::3 ip6-allhosts"
+end
+
+directory '/opt/drush' do
+  action :create
+end
+composer_project 'drush/drush:7.*' do
+  project_dir '/opt/drush'
+  action :require
+end
+link '/usr/local/bin/drush' do
+  to '/opt/drush/vendor/bin/drush'
 end

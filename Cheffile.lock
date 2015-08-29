@@ -6,8 +6,11 @@ SITE
     apt (2.3.0)
     aws (1.0.0)
     build-essential (1.4.2)
+    chef-mailcatcher (0.1.12)
     chef_handler (1.1.4)
-    curl (1.1.0)
+    composer (2.2.0)
+      php (>= 0.0.0)
+    curl (2.0.1)
     database (1.5.2)
       aws (>= 0.0.0)
       mysql (>= 1.3.0)
@@ -20,8 +23,7 @@ SITE
       runit (>= 1.0.0)
       windows (>= 0.0.0)
       yum (>= 0.0.0)
-    hosts (0.1.1)
-    imagemagick (0.2.2)
+    imagemagick (0.2.3)
     mysql (4.0.4)
       build-essential (~> 1.4)
       openssl (~> 1.1)
@@ -37,7 +39,7 @@ SITE
     runit (1.4.0)
       build-essential (>= 0.0.0)
       yum (>= 0.0.0)
-    vim (1.0.2)
+    vim (1.1.2)
     windows (1.11.0)
       chef_handler (>= 0.0.0)
     xfs (1.1.0)
@@ -45,25 +47,17 @@ SITE
       build-essential (>= 0.0.0)
     yum (2.4.2)
 
-GIT
-  remote: https://github.com/msonnabaum/chef-drush
-  ref: master
-  sha: 52bbcf540582b44f6bcb34032ca72369c6885865
-  specs:
-    drush (0.10.0)
-      php (>= 0.0.0)
-
 DEPENDENCIES
   apache2 (>= 0)
   apache2 (>= 0)
   application (>= 0)
   apt (>= 0)
   build-essential (>= 0)
+  chef-mailcatcher (>= 0)
+  composer (>= 0)
   curl (>= 0)
   database (>= 0)
-  drush (>= 0)
   git (>= 0)
-  hosts (>= 0)
   imagemagick (>= 0)
   mysql (>= 0)
   openssl (>= 0)
