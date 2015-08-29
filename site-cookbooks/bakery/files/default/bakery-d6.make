@@ -5,21 +5,13 @@ core = 6.x
 api = 2
 
 ; Core project
-projects[drupal][version] = "6.28"
+projects[drupal][version] = "6.37"
 
 ; Modules
-projects[ctools][version] = "1.9"
-projects[ctools][type] = "module"
+projects[ctools][version] = "1.14"
 projects[features][version] = "1.2"
-projects[features][type] = "module"
 projects[strongarm][version] = "2.2"
-projects[strongarm][type] = "module"
-projects[admin_menu][version] = "1.8"
-projects[admin_menu][type] = "module"
-projects[environment_indicator][version] = "1.1"
-projects[environment_indicator][type] = "module"
-projects[devel][version] = "1.26"
-projects[devel][type] = "module"
+projects[admin_menu][version] = "1.9"
+projects[environment_indicator][version] = "1.2"
+projects[devel][version] = "1.28"
 projects[bakery][version] = "2.x-dev"
-projects[bakery][type] = "module"
-
