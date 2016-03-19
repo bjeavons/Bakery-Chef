@@ -6,7 +6,8 @@
   },
   "json_class": "Chef::Role",
   "run_list": [
-    "recipe[drush]",
+    "recipe[chef-mailcatcher::default]",
+    "recipe[composer]",
     "recipe[bakery]"
   ],
   "override_attributes": {}

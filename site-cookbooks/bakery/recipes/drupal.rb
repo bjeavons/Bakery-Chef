@@ -29,7 +29,7 @@ node[:sites].each do |site|
 
   # drush make site
   execute "make-#{site[:name]}-site" do
-    command "cd #{site_dir}; drush make #{make} htdocs"
+    command "cd #{site_dir}; drush make #{make} --working-copy --no-gitinfofile htdocs"
     not_if { File.exists?("#{site_dir}/htdocs/index.php") }
   end
 
