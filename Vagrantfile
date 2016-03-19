@@ -10,7 +10,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :chef_solo do |chef|
     myconfig = JSON.parse(File.read("config/node.json"))
-    chef.version = "12.3.0"
     chef.cookbooks_path = ["site-cookbooks", "cookbooks"]
     chef.roles_path = "roles"
     chef.data_bags_path = "data_bags"
