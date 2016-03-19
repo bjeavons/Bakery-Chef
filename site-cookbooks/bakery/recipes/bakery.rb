@@ -67,7 +67,7 @@ node[:sites].each do |site|
 
   # enable registration
   execute "enable-registration" do
-    command "cd #{site_dir}/htdocs; drush vset -y user_email_verification 0; drush -y vset user_registration 1"
+    command "cd #{site_dir}/htdocs; drush vset -y user_email_verification 0; drush -y vset user_register 1"
     ignore_failure true
   end
 
